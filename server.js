@@ -13,9 +13,10 @@ const kevinPersonality =
 const { askKevin } =
     require("./ai/brain.js");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
+const isVercelRuntime = Boolean(process.env.VERCEL);
 
 
 /*
@@ -120,8 +121,12 @@ function privateAccess(
     next
 ) {
 
+    if (isVercelRuntime) {
+        return next();
+    }
+
     const remoteAddress =
-        req.socket.remoteAddress;
+        req.socket.remoteAddress || req.ip;
 
 
     const isLocalhost =
@@ -1055,83 +1060,74 @@ START SERVER
 =========================================
 */
 
-const server =
-    app.listen(
-        PORT,
-        "127.0.0.1",
-        () => {
+if (require.main === module) {
 
-            console.log(
-                `Kevin is running privately at http://127.0.0.1:${PORT}`
-            );
+    const server =
+        app.listen(
+            PORT,
+            "127.0.0.1",
+            () => {
 
-            console.log(
-                "Private access protection: ENABLED"
-            );
+                console.log(
+                    `Kevin is running privately at http://127.0.0.1:${PORT}`
+                );
 
-            console.log(
-                "Kevin authentication: ENABLED"
-            );
+                console.log(
+                    "Private access protection: ENABLED"
+                );
 
-            console.log(
-                "Kevin chat rate limiting: ENABLED (20 requests/minute)"
-            );
+                console.log(
+                    "Kevin authentication: ENABLED"
+                );
 
-            console.log(
-                "Kevin input validation: ENABLED"
-            );
+                console.log(
+                    "Kevin chat rate limiting: ENABLED (20 requests/minute)"
+                );
 
-            console.log(
-                "Kevin security headers: ENABLED"
-            );
+                console.log(
+                    "Kevin input validation: ENABLED"
+                );
 
-            console.log(
-                "Kevin secure cookies: ENABLED"
-            );
+                console.log(
+                    "Kevin security headers: ENABLED"
+                );
 
-            console.log(
-                "Kevin server process: RUNNING"
+                console.log(
+                    "Kevin secure cookies: ENABLED"
+                );
+
+                console.log(
+                    "Kevin server process: RUNNING"
+                );
+
+            }
+        );
+
+    server.on(
+        "error",
+        (error) => {
+
+            console.error(
+                "Kevin server startup error:",
+                error
             );
 
         }
     );
 
+    server.on(
+        "close",
+        () => {
 
-/*
-=========================================
-SERVER ERROR MONITOR
-=========================================
-*/
+            console.log(
+                "Kevin server has CLOSED."
+            );
 
-server.on(
-    "error",
-    (error) => {
+        }
+    );
+}
 
-        console.error(
-            "Kevin server startup error:",
-            error
-        );
-
-    }
-);
-
-
-/*
-=========================================
-SERVER CLOSE MONITOR
-=========================================
-*/
-
-server.on(
-    "close",
-    () => {
-
-        console.log(
-            "Kevin server has CLOSED."
-        );
-
-    }
-);
+module.exports = app;
 
 
 /*
