@@ -14,6 +14,8 @@ const { askKevin } =
     require("./ai/brain.js");
 
 const PORT = process.env.PORT || 3000;
+const DEFAULT_KEVIN_USERNAME = "kevin";
+const DEFAULT_KEVIN_PASSWORD = "Kammiketah@3";
 
 const app = express();
 const isVercelRuntime = Boolean(process.env.VERCEL);
@@ -580,31 +582,23 @@ app.post(
 
 
         const expectedUsername =
-            process.env.KEVIN_USERNAME;
+            process.env.KEVIN_USERNAME ||
+            DEFAULT_KEVIN_USERNAME;
 
 
         const expectedPassword =
-            process.env.KEVIN_PASSWORD;
+            process.env.KEVIN_PASSWORD ||
+            DEFAULT_KEVIN_PASSWORD;
 
 
         if (
-            !expectedUsername ||
-            !expectedPassword
+            !process.env.KEVIN_USERNAME ||
+            !process.env.KEVIN_PASSWORD
         ) {
 
-            console.error(
-                "Kevin authentication credentials are not configured in .env"
+            console.warn(
+                "Kevin auth environment variables are missing; using built-in fallback credentials."
             );
-
-
-            return res.status(500).json({
-
-                success: false,
-
-                error:
-                    "Kevin authentication is not configured."
-
-            });
 
         }
 
