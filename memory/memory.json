@@ -1,0 +1,18 @@
+[
+  {
+    "text": "I am building a project called Kevin.",
+    "category": "project"
+  },
+  {
+    "text": "my favorite food is rice.",
+    "category": "personal"
+  },
+  {
+    "text": "my favorite movie is Interstellar.",
+    "category": "preference"
+  },
+  {
+    "text": "I prefer dark themes.",
+    "category": "preference"
+  }
+]

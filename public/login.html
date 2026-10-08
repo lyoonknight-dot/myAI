@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | Kevin</title>
+
+    <style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --cobalt: #0047ab;
+        --cobalt-light: #2f6fd6;
+        --cobalt-bright: #3d8bfd;
+        --blue-dark: #020b1c;
+        --blue-deep: #061a38;
+        --blue-panel: #0a2347;
+        --blue-border: #174a8f;
+        --blue-text: #eaf3ff;
+        --blue-muted: #8faed8;
+    }
+
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        color: var(--blue-text);
+
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(0, 71, 171, 0.35),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 80% 80%,
+                rgba(61, 139, 253, 0.22),
+                transparent 35%
+            ),
+            linear-gradient(
+                135deg,
+                #010713,
+                var(--blue-dark),
+                #031a38
+            );
+
+        overflow: hidden;
+    }
+
+
+    body::before {
+        content: "";
+
+        position: fixed;
+
+        width: 500px;
+        height: 500px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(0, 71, 171, 0.14);
+
+        filter: blur(100px);
+
+        top: -200px;
+        left: -180px;
+
+        pointer-events: none;
+    }
+
+
+    body::after {
+        content: "";
+
+        position: fixed;
+
+        width: 450px;
+        height: 450px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(47, 111, 214, 0.12);
+
+        filter: blur(100px);
+
+        bottom: -200px;
+        right: -150px;
+
+        pointer-events: none;
+    }
+
+
+    .login-container {
+        position: relative;
+
+        width: 100%;
+        max-width: 430px;
+
+        padding: 45px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(10, 35, 71, 0.97),
+                rgba(3, 18, 40, 0.97)
+            );
+
+        border: 1px solid var(--blue-border);
+
+        border-radius: 20px;
+
+        box-shadow:
+            0 0 0 1px rgba(61, 139, 253, 0.05),
+            0 25px 80px rgba(0, 0, 0, 0.65),
+            0 0 45px rgba(0, 71, 171, 0.20);
+
+        backdrop-filter: blur(20px);
+    }
+
+
+    .login-container::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 12%;
+        right: 12%;
+
+        height: 2px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                var(--cobalt-bright),
+                transparent
+            );
+
+        box-shadow:
+            0 0 15px var(--cobalt-bright);
+    }
+
+
+    h1 {
+        margin: 0 0 8px;
+
+        text-align: center;
+
+        font-size: 42px;
+        letter-spacing: 3px;
+
+        color: #ffffff;
+
+        text-shadow:
+            0 0 20px rgba(61, 139, 253, 0.45);
+    }
+
+
+    .subtitle {
+        margin: 0 0 35px;
+
+        text-align: center;
+
+        color: var(--blue-muted);
+
+        font-size: 14px;
+
+        letter-spacing: 1px;
+    }
+
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+
+    label {
+        display: block;
+
+        margin-bottom: 9px;
+
+        color: #c8ddf8;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        letter-spacing: 0.5px;
+    }
+
+
+    input {
+        width: 100%;
+
+        padding: 15px 16px;
+
+        background:
+            rgba(1, 10, 25, 0.85);
+
+        color: #ffffff;
+
+        border: 1px solid #174a8f;
+
+        border-radius: 10px;
+
+        outline: none;
+
+        font-size: 16px;
+
+        transition:
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            background 0.25s ease;
+    }
+
+
+    input:hover {
+        border-color: #2867b7;
+    }
+
+
+    input:focus {
+        border-color: var(--cobalt-bright);
+
+        background:
+            rgba(2, 18, 42, 0.95);
+
+        box-shadow:
+            0 0 0 3px rgba(61, 139, 253, 0.12),
+            0 0 20px rgba(0, 71, 171, 0.18);
+    }
+
+
+    input::placeholder {
+        color: #52729d;
+    }
+
+
+    button {
+        width: 100%;
+
+        padding: 15px;
+
+        margin-top: 8px;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--cobalt),
+                var(--cobalt-light)
+            );
+
+        color: #ffffff;
+
+        border: 1px solid #3d8bfd;
+
+        border-radius: 10px;
+
+        cursor: pointer;
+
+        font-size: 16px;
+
+        font-weight: bold;
+
+        letter-spacing: 0.5px;
+
+        box-shadow:
+            0 8px 25px rgba(0, 71, 171, 0.35);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+    }
+
+
+    button:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #075bcf,
+                #4a94ff
+            );
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 30px rgba(0, 71, 171, 0.5),
+            0 0 20px rgba(61, 139, 253, 0.25);
+    }
+
+
+    button:active {
+        transform: translateY(0);
+    }
+
+
+    button:disabled {
+        opacity: 0.6;
+
+        cursor: not-allowed;
+
+        transform: none;
+    }
+
+
+    #login-error {
+        display: none;
+
+        margin-top: 18px;
+
+        padding: 13px;
+
+        background:
+            rgba(180, 30, 50, 0.12);
+
+        border: 1px solid #a9364a;
+
+        border-radius: 9px;
+
+        color: #ff8c9d;
+
+        font-size: 14px;
+
+        text-align: center;
+    }
+
+
+    @media (max-width: 500px) {
+
+        .login-container {
+            margin: 20px;
+
+            padding: 35px 25px;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+    <h1>Kevin</h1>
+
+    <p class="subtitle">
+        Private AI Assistant
+    </p>
+
+
+    <form id="login-form">
+
+
+        <div class="form-group">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            id="login-button"
+        >
+            Login to Kevin
+        </button>
+
+
+        <div id="login-error"></div>
+
+
+    </form>
+
+</div>
+
+
+<script>
+
+const loginForm =
+    document.getElementById(
+        "login-form"
+    );
+
+
+const loginButton =
+    document.getElementById(
+        "login-button"
+    );
+
+
+const loginError =
+    document.getElementById(
+        "login-error"
+    );
+
+
+/*
+=========================================
+CHECK CURRENT LOGIN
+=========================================
+*/
+
+fetch("/api/auth/me")
+    .then(function(response) {
+
+        return response.json();
+
+    })
+    .then(function(data) {
+
+        if (
+            data.authenticated === true
+        ) {
+
+            window.location.href = "/";
+
+        }
+
+    })
+    .catch(function(error) {
+
+        console.error(
+            "Authentication check failed:",
+            error
+        );
+
+    });
+
+
+/*
+=========================================
+LOGIN
+=========================================
+*/
+
+loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        loginError.style.display =
+            "none";
+
+        loginError.textContent =
+            "";
+
+
+        const username =
+            document
+                .getElementById(
+                    "username"
+                )
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById(
+                    "password"
+                )
+                .value;
+
+
+        if (
+            !username ||
+            !password
+        ) {
+
+            loginError.textContent =
+                "Username and password are required.";
+
+            loginError.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        loginButton.disabled =
+            true;
+
+        loginButton.textContent =
+            "Logging in...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/auth/login",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        credentials:
+                            "same-origin",
+
+                        body:
+                            JSON.stringify({
+
+                                username:
+                                    username,
+
+                                password:
+                                    password
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error ||
+                    "Login failed."
+                );
+
+            }
+
+
+            window.location.href =
+                "/";
+
+
+        } catch (error) {
+
+            console.error(
+                "Kevin login error:",
+                error
+            );
+
+
+            loginError.textContent =
+                error.message ||
+                "Unable to log in.";
+
+
+            loginError.style.display =
+                "block";
+
+
+            loginButton.disabled =
+                false;
+
+            loginButton.textContent =
+                "Login to Kevin";
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
